@@ -1,0 +1,10 @@
+Package: pwrench
+Title: utilities for persian stuff
+Version: 0.0.0.9000
+Authors@R: 
+    person("Bahman", "Ajdari", , "bahman.ajdari@gmail.com", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
