@@ -23,7 +23,7 @@ mutate_state_en <- function(data, column_name) {
       {{column_name}}=="بوشهر" ~ "Bushehr",
       {{column_name}}=="تهران" ~ "Tehran",
       {{column_name}}=="چهارمحال وبختیاری"~"Chaharmahal and Bakhtiari",
-      #{{column_name}}=="چهارمحال و بختیاری"~"Chaharmahal and Bakhtiari",
+      {{column_name}}=="چهارمحال و بختیاری"~"Chaharmahal and Bakhtiari",
       {{column_name}}=="خراسان جنوبی" ~ "South Khorasan",
       {{column_name}}=="خراسان جنوبی" ~ "South Khorasan",
       {{column_name}}=="خراسان رضوی" ~ "Razavi Khorasan",
