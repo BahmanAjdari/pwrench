@@ -18,7 +18,7 @@
 **Installation:**
 
 ```R
-devtools::install_github("your_username/pwrench")
+devtools::install_github("bahmanajdari/pwrench")
 ```
 **Usage:**
 library(pwrench)
