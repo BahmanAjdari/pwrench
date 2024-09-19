@@ -1,5 +1,5 @@
 #' Persian numbers to English Numbers
-#'
+#' @param x The Farsi number
 #'@description
 #'If you have a number in Persian, this functions turns that number to English number.
 #'

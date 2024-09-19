@@ -7,15 +7,15 @@
 calculate_churn_rate(data, year, product_id = "product_id")
 }
 \arguments{
-\item{product_id}{}
+\item{data}{Inpute your data}
+
+\item{year}{The years you are calculating churn rate}
+
+\item{product_id}{the unique id}
 }
 \value{
 churn rate
 }
 \description{
 This function returns churn rate for product id in year.
-}
-\examples{
-years <- 2018:2021
-churn_rates <- lapply(years, function(y) calculate_churn_rate(x, y))
 }

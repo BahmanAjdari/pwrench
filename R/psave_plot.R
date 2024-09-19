@@ -1,19 +1,18 @@
 #' Save plots easily
 #'
-#' @param plot
-#' @param height
-#' @param width
-#' @param dpi
-#' @param units
-#' @param path
+#' @param plot The plot name
+#' @param height height
+#' @param width width
+#' @param dpi dpi
+#' @param units cm
+#' @param path path
 #'
 #' @description
 #' This function save your plots in ggplot2 in a dir named plot that may or may not exists in you wd dir.
 #'
-#' @return
+#' @return saves the plot
 #' @export
 #'
-#' @examples
 psave_plot <- function(plot, height = 8, width = 12,dpi = 300,units = "in" ,path = getwd()) {
   # Ensure the directory exists
   if (!dir.exists("plot")) {

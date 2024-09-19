@@ -14,7 +14,20 @@ psave_plot(
 )
 }
 \arguments{
-\item{path}{}
+\item{plot}{The plot name}
+
+\item{height}{height}
+
+\item{width}{width}
+
+\item{dpi}{dpi}
+
+\item{units}{cm}
+
+\item{path}{path}
+}
+\value{
+saves the plot
 }
 \description{
 This function save your plots in ggplot2 in a dir named plot that may or may not exists in you wd dir.

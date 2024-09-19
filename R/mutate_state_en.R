@@ -9,7 +9,6 @@
 #' @return state_en columns that contains English name of states in Iran.
 #' @export
 #'
-#' @examples
 mutate_state_en <- function(data, column_name) {
   data %>%
     mutate(state_en = case_when(

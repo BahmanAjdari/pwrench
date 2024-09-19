@@ -3,16 +3,14 @@
 #' @description
 #' This function returns churn rate for product id in year.
 #'
-#' @param data
-#' @param year
-#' @param product_id
+#' @param data Inpute your data
+#' @param year The years you are calculating churn rate
+#' @param product_id the unique id
 #'
 #' @return churn rate
 #' @export
 #'
-#' @examples
-#' years <- 2018:2021
-#' churn_rates <- lapply(years, function(y) calculate_churn_rate(x, y))
+
 calculate_churn_rate <- function(data, year, product_id = "product_id") {
   data_year <- data |>
     filter(purchase_year == year)

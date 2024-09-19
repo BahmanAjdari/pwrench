@@ -2,18 +2,18 @@
 % Please edit documentation in R/farsi_keyboard.R
 \name{farsi_keyboard}
 \alias{farsi_keyboard}
-\title{correcting charachters from Arabic keyboards}
+\title{Correcting characters from Arabic keyboards}
 \usage{
 farsi_keyboard(dataset, coln)
 }
 \arguments{
-\item{dataset}{your dataset}
+\item{dataset}{Your dataset}
 
-\item{coln}{the column you want to clean}
+\item{coln}{The column you want to clean}
 }
 \value{
-Persian charachters
+Dataset with Persian characters corrected
 }
 \description{
-correcting charachters from Arabic keyboards
+Correcting characters from Arabic keyboards
 }

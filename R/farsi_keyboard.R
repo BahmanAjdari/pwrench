@@ -6,7 +6,6 @@
 #' @return Dataset with Persian characters corrected
 #' @export
 #'
-#' @examples
 farsi_keyboard <- function(dataset, coln) {
   library(dplyr)
   library(stringr)
