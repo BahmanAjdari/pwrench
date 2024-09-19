@@ -21,14 +21,16 @@
 devtools::install_github("bahmanajdari/pwrench")
 ```
 **Usage:**
+```R
 library(pwrench)
-
+```
 # Example using theme_fa()
+```R
 library(ggplot2)
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   geom_point() +
   theme_fa()
-
+```
 # Example using to_en_number()
 ```R
 persian_number <- "۱۲۳"
