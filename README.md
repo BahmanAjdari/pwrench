@@ -27,10 +27,20 @@ library(pwrench)
 # Example using theme_fa()
 ```R
 library(ggplot2)
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
   geom_point() +
+  labs(
+    title = "این یک عنوان فارسی است",
+    subtitle = "این یک زیر عنوان فارسی است",
+    x = "عرض کاسبرگ",
+    y = "طول کاسبرگ",
+    color = "گونه",
+    caption="منبع:این یک منبع فارسی است"
+  )+
   theme_fa()
 ```
+![Image Description](img/Rplot_fa.png)
+
 # Example using to_en_number()
 ```R
 persian_number <- "۱۲۳"
