@@ -23,6 +23,7 @@ rasmio_theme <- function(persian_font = "Sahel FD", title_size = 28, subtitle_si
       legend.position = legend_position,  # Position the legend at the bottom
       legend.title = element_blank(),  # Remove the legend title
       panel.grid.minor = element_blank(),  # Remove minor grid lines
-      axis.ticks = element_blank()  # Remove minor axis ticks
+      axis.ticks = element_blank(),  # Remove minor axis ticks
+      panel.grid.major.y = element_blank() # Remove Major Grids
     )
 }
