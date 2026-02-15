@@ -1,31 +1,60 @@
 # pwrench
 
-**A Personal R Package for Data Analysis**
+**Utilities for Persian/Farsi data in R** — themes, number conversion, and helpers for working with Iranian data.
 
-**Purpose:**
-* Provides custom functions for data visualization and number conversion.
-* Primarily designed for personal use but may be useful for others working with Persian data.
-* I recommend to use it with caution. 
-* Let me know if you have questions.
+---
 
-**Key Functions:**
+## Overview
 
-* **theme_fa():** Creates a Persian-friendly theme for ggplot2.
-* **theme_map_fa():** Creates a Persian-friendly theme for maps in ggplot2.
-* **to_en_number():** Converts Persian numbers to English numbers.
-* **to_fa_number():** Converts English numbers to Persian numbers.
+pwrench is a personal R package that provides:
 
-**Installation:**
+- **Persian-friendly ggplot2 themes** (Sahel font, RTL alignment, configurable sizes)
+- **Number conversion** (Persian ↔ English digits)
+- **Helpers** for Iranian data (e.g. province names, churn rates)
 
-```R
+It is primarily for personal use but may be useful for others working with Persian text and data. Use with caution; feedback and issues are welcome.
+
+---
+
+## Installation
+
+```r
+# install.packages("devtools")
 devtools::install_github("bahmanajdari/pwrench")
 ```
-**Usage:**
-```R
+
+```r
 library(pwrench)
 ```
-# Example using theme_fa()
-```R
+
+Requires **ggplot2** for the theme functions.
+
+---
+
+## Key functions
+
+| Function | Description |
+|----------|-------------|
+| `theme_fa()` | Persian-friendly ggplot2 theme (title, subtitle, caption, legend; optional RTL) |
+| `theme_map_fa()` | Same style for maps (minimal axes, `theme_void` base) |
+| `rasmio_theme()` | Alternative Persian theme (Rasmio standards) |
+| `to_en_numbers()` | Convert Persian/Arabic numerals to English (0–9) |
+| `to_fa_numbers()` | Convert English numerals to Persian |
+| `mutate_state_en()` | Add English province names from a column of Persian استان names |
+| `calculate_churn_rate()` | Churn and retention rates by product and year |
+| `psave_plot()` | Save a ggplot with consistent size and DPI |
+| `detect_fake_phone_numbers()` | Flag invalid/fake phone numbers |
+| `farsi_keyboard()` | Farsi keyboard–related helper |
+
+---
+
+## Examples
+
+### theme_fa()
+
+Persian-friendly plot with optional right-aligned title (RTL):
+
+```r
 library(ggplot2)
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
   geom_point() +
@@ -35,15 +64,43 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
     x = "عرض کاسبرگ",
     y = "طول کاسبرگ",
     color = "گونه",
-    caption="منبع:این یک منبع فارسی است"
-  )+
+    caption = "منبع: این یک منبع فارسی است"
+  ) +
   theme_fa()
 ```
-![Image Description](img/Rplot_fa.png)
 
-# Example using to_en_number()
-```R
-persian_number <- "۱۲۳"
-english_number <- to_en_number(persian_number)
+Right-aligned title for RTL:
+
+```r
+theme_fa(title_hjust = 1)
 ```
-** Note: This package is primarily for personal use, and public usage may have limitations. Please report any issues or provide feedback.**
+
+![Example plot](img/Rplot_fa.png)
+
+### to_en_numbers() and to_fa_numbers()
+
+```r
+persian_number <- "۱۲۳"
+to_en_numbers(persian_number)  # "123"
+
+to_fa_numbers(123)             # Persian digits
+```
+
+### calculate_churn_rate()
+
+Data with columns `purchase_year`, `product_id`, and `renewed` (logical):
+
+```r
+dat <- data.frame(
+  purchase_year = c(2022, 2022, 2023),
+  product_id = c("A", "A", "B"),
+  renewed = c(TRUE, FALSE, FALSE)
+)
+calculate_churn_rate(dat, year = 2022:2023)
+```
+
+---
+
+## Disclaimer
+
+This package is primarily for personal use; public use may have limitations. Please report issues or send feedback.
