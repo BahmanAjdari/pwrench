@@ -1,28 +1,56 @@
 # Function to calculate churn rate
-#' churn rates by year
+#' Churn and retention rates by year
+#'
 #' @description
-#' This function returns churn rate for product id in year.
+#' Returns churn rate and retention rate per product (or other grouping id) for
+#' one or more years. Expects one row per customer purchase/renewal with a year,
+#' a product (or segment) id, and a renewal flag.
 #'
-#' @param data Inpute your data
-#' @param year The years you are calculating churn rate
-#' @param product_id the unique id
+#' @param data Your dataframe or tibble.
+#' @param year Numeric vector of years to include (e.g. `2020` or `2019:2023`).
+#' @param product_id Character. Name of the column that identifies the product/segment (default `"product_id"`).
+#' @param year_column Character. Name of the column containing the purchase/renewal year (default `"purchase_year"`).
+#' @param renewed_column Character. Name of the logical column indicating renewal (default `"renewed"`). `TRUE` = renewed, `FALSE` = churned.
 #'
-#' @return churn rate
+#' @return A tibble with columns: product id, year, total_customers, renewed_customers, churned_customers, churn_rate, retention_rate. Returns one row per product per year; products with no customers in a year are omitted.
+#'
 #' @export
 #'
+#' @examples
+#' dat <- data.frame(
+#'   purchase_year = c(2022, 2022, 2023, 2023),
+#'   product_id = c("A", "A", "A", "B"),
+#'   renewed = c(TRUE, FALSE, TRUE, FALSE)
+#' )
+#' calculate_churn_rate(dat, year = 2022:2023)
+#'
+calculate_churn_rate <- function(data,
+                                 year,
+                                 product_id = "product_id",
+                                 year_column = "purchase_year",
+                                 renewed_column = "renewed") {
+  required <- c(product_id, year_column, renewed_column)
+  missing_cols <- setdiff(required, names(data))
+  if (length(missing_cols) > 0) {
+    stop("Required columns missing in 'data': ", paste(missing_cols, collapse = ", "))
+  }
 
-calculate_churn_rate <- function(data, year, product_id = "product_id") {
   data_year <- data |>
-    filter(purchase_year == year)
+    filter(.data[[year_column]] %in% year)
 
-  churn_rate <- data_year |>
-    group_by(product_id) |>
+  out <- data_year |>
+    group_by(.data[[product_id]], .data[[year_column]]) |>
     summarise(
       total_customers = n(),
-      churned_customers = sum(!renewed),
-      churn_rate = churned_customers / total_customers
+      renewed_customers = sum(.data[[renewed_column]], na.rm = TRUE),
+      churned_customers = sum(!.data[[renewed_column]], na.rm = TRUE),
+      .groups = "drop"
     ) |>
-    mutate(year = year)
+    mutate(
+      churn_rate = if_else(total_customers > 0, churned_customers / total_customers, NA_real_),
+      retention_rate = if_else(total_customers > 0, renewed_customers / total_customers, NA_real_)
+    ) |>
+    rename(year = .data[[year_column]])
 
-  churn_rate
+  out
 }
