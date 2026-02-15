@@ -1,94 +1,124 @@
-
-#' Ostan to Province
-#' @description
-#' This function gets Persian state name and transform the Persian col to English which is standard names for Iran's states in English
+#' Add English province names and optional codes from Persian Ostan names
 #'
-#' @param data Pass the data you are working on
-#' @param column_name the is the column that contains Persian names of Ostan(استان)
+#' Takes a column of Persian province names (استان) and adds standard English
+#' names and/or numeric codes for Iran's provinces. Input is trimmed so
+#' leading/trailing whitespace still matches.
 #'
-#' @return state_en columns that contains English name of states in Iran.
+#' @param data A data frame or tibble.
+#' @param column_name Unquoted name of the column containing Persian province
+#'   names (استان).
+#' @param add Character vector. Which columns to add: `"state_en"` (English name),
+#'   `"state_code"` (numeric code as character), or both (default).
+#'
+#' @return The data with new column(s) `state_en` and/or `state_code` appended.
+#'   Unmatched names yield `NA`.
+#'
 #' @export
 #'
-mutate_state_en <- function(data, column_name) {
-  data %>%
-    mutate(state_en = case_when(
-      {{column_name}}=="آذربایجان شرقی" ~ "East Azerbaijan",
-      {{column_name}}=="آذربایجان شرقی" ~ "East Azerbaijan",
-      {{column_name}}=="آذربایجان غربی" ~ "West Azerbaijan",
-      {{column_name}}=="اردبیل" ~ "Ardabil",
-      {{column_name}}=="اصفهان" ~ "Isfahan",
-      {{column_name}}=="البرز" ~ "Alborz",
-      {{column_name}}=="ایلام" ~ "Ilam",
-      {{column_name}}=="بوشهر" ~ "Bushehr",
-      {{column_name}}=="تهران" ~ "Tehran",
-      {{column_name}}=="چهارمحال وبختیاری"~"Chaharmahal and Bakhtiari",
-      {{column_name}}=="چهارمحال و بختیاری"~"Chaharmahal and Bakhtiari",
-      {{column_name}}=="خراسان جنوبی" ~ "South Khorasan",
-      {{column_name}}=="خراسان جنوبی" ~ "South Khorasan",
-      {{column_name}}=="خراسان رضوی" ~ "Razavi Khorasan",
-      {{column_name}}=="خراسان شمالی" ~ "North Khorasan",
-      {{column_name}}=="خوزستان" ~ "Khuzestan",
-      {{column_name}}=="زنجان" ~ "Zanjan",
-      {{column_name}}=="سمنان" ~ "Semnan",
-      {{column_name}}=="سیستان وبلوچستان" ~ "Sistan and Baluchestan",
-      {{column_name}}=="سیستان بلوچستان" ~ "Sistan and Baluchestan",
-      {{column_name}}=="سیستان و بلوچستان" ~ "Sistan and Baluchestan",
-      {{column_name}}=="فارس" ~ "Fars",
-      {{column_name}}=="قزوین" ~ "Qazvin",
-      {{column_name}}=="قزوین" ~ "Qazvin",
-      {{column_name}}=="قم" ~ "Qom",
-      {{column_name}}=="کردستان" ~"Kurdistan",
-      {{column_name}}=="کرمان" ~ "Kerman",
-      {{column_name}}=="کرمانشاه" ~ "Kermanshah",
-      {{column_name}}=="کهگیلویه وبویراحمد" ~"Kohgiluyeh and Boyer-Ahmad",
-      {{column_name}}=="کهگلویه و بویراحمد" ~"Kohgiluyeh and Boyer-Ahmad",
-      {{column_name}}=="گلستان" ~ "Golestan",
-      {{column_name}}=="گیلان" ~ "Gilan",
-      {{column_name}}=="لرستان" ~ "Lorestan",
-      {{column_name}}=="مازندران" ~ "Mazandaran",
-      {{column_name}}=="مرکزی" ~ "Markazi",
-      {{column_name}}=="هرمزگان" ~ "Hormozgan",
-      {{column_name}}=="همدان" ~ "Hamadan",
-      {{column_name}}=="یزد" ~ "Yazd",
-      TRUE ~ NA_character_
-    ),
-    state_code = case_when(
-      {{column_name}} == "تهران" ~ "21",
-      {{column_name}} == "آذربایجان شرقی" ~ "41",
-      {{column_name}} == "آذربایجان غربی" ~ "44",
-      {{column_name}} == "اردبیل" ~ "45",
-      {{column_name}} == "اصفهان" ~ "31",
-      {{column_name}} == "البرز" ~ "26",
-      {{column_name}} == "ایلام" ~ "84",
-      {{column_name}} == "بوشهر" ~ "77",
-      {{column_name}} == " چهارمحال و بختیاری" ~ "38",
-      {{column_name}} == "چهارمحال و بختیاری" ~ "38",
-      {{column_name}} == "خراسان جنوبی" ~ "56",
-      {{column_name}} == "خراسان رضوی" ~ "51",
-      {{column_name}} == "خراسان شمالی" ~ "58",
-      {{column_name}} == "خوزستان" ~ "61",
-      {{column_name}} == "زنجان" ~ "24",
-      {{column_name}} == "سمنان" ~ "23",
-      {{column_name}} == "سیستان بلوچستان" ~ "54",
-      {{column_name}} == "سیستان و بلوچستان" ~ "54",
-      {{column_name}} == "فارس" ~ "71",
-      {{column_name}} == "قزوین" ~ "28",
-      {{column_name}} == "قم" ~ "25",
-      {{column_name}} == "گلستان" ~ "17",
-      {{column_name}} == "گیلان" ~ "13",
-      {{column_name}} == "لرستان" ~ "66",
-      {{column_name}} == "مازندران" ~ "11",
-      {{column_name}} == "مرکزی" ~ "86",
-      {{column_name}} == "هرمزگان" ~ "76",
-      {{column_name}} == "همدان" ~ "81",
-      {{column_name}} == "کردستان" ~ "87",
-      {{column_name}} == "کرمان" ~ "34",
-      {{column_name}} == "کرمانشاه" ~ "83",
-      {{column_name}} == "کهگیلویه و بویراحمد" ~ "74",
-      {{column_name}} == "کهگیلویه وبویراحمد" ~ "74",
-      {{column_name}} == "کهگلویه و بویراحمد" ~ "74",
-      {{column_name}} == "یزد" ~ "35",
-      TRUE ~ NA_character_
-    )
-    )
+#' @examples
+#' d <- data.frame(ostan = c("تهران", "  اصفهان  ", "خوزستان"))
+#' mutate_state_en(d, ostan)
+#' mutate_state_en(d, ostan, add = "state_en")
+#'
+mutate_state_en <- function(data,
+                           column_name,
+                           add = c("state_en", "state_code")) {
+  col_chr <- as.character(substitute(column_name))
+  if (!col_chr %in% names(data)) {
+    stop("Column '", col_chr, "' not found in data.")
+  }
+
+  add <- match.arg(add, c("state_en", "state_code"), several.ok = TRUE)
+
+  out <- data %>%
+    mutate(
+      .st = trimws({{ column_name }}),
+      state_en = case_when(
+        .st == "آذربایجان شرقی" ~ "East Azerbaijan",
+        .st == "آذربایجان غربی" ~ "West Azerbaijan",
+        .st == "اردبیل" ~ "Ardabil",
+        .st == "اصفهان" ~ "Isfahan",
+        .st == "البرز" ~ "Alborz",
+        .st == "ایلام" ~ "Ilam",
+        .st == "بوشهر" ~ "Bushehr",
+        .st == "تهران" ~ "Tehran",
+        .st == "چهارمحال وبختیاری" ~ "Chaharmahal and Bakhtiari",
+        .st == "چهارمحال و بختیاری" ~ "Chaharmahal and Bakhtiari",
+        .st == "خراسان جنوبی" ~ "South Khorasan",
+        .st == "خراسان رضوی" ~ "Razavi Khorasan",
+        .st == "خراسان شمالی" ~ "North Khorasan",
+        .st == "خوزستان" ~ "Khuzestan",
+        .st == "زنجان" ~ "Zanjan",
+        .st == "سمنان" ~ "Semnan",
+        .st == "سیستان وبلوچستان" ~ "Sistan and Baluchestan",
+        .st == "سیستان بلوچستان" ~ "Sistan and Baluchestan",
+        .st == "سیستان و بلوچستان" ~ "Sistan and Baluchestan",
+        .st == "فارس" ~ "Fars",
+        .st == "قزوین" ~ "Qazvin",
+        .st == "قم" ~ "Qom",
+        .st == "کردستان" ~ "Kurdistan",
+        .st == "کرمان" ~ "Kerman",
+        .st == "کرمانشاه" ~ "Kermanshah",
+        .st == "کهگیلویه وبویراحمد" ~ "Kohgiluyeh and Boyer-Ahmad",
+        .st == "کهگیلویه و بویراحمد" ~ "Kohgiluyeh and Boyer-Ahmad",
+        .st == "کهگلویه و بویراحمد" ~ "Kohgiluyeh and Boyer-Ahmad",
+        .st == "گلستان" ~ "Golestan",
+        .st == "گیلان" ~ "Gilan",
+        .st == "لرستان" ~ "Lorestan",
+        .st == "مازندران" ~ "Mazandaran",
+        .st == "مرکزی" ~ "Markazi",
+        .st == "هرمزگان" ~ "Hormozgan",
+        .st == "همدان" ~ "Hamadan",
+        .st == "یزد" ~ "Yazd",
+        TRUE ~ NA_character_
+      ),
+      state_code = case_when(
+        .st == "آذربایجان شرقی" ~ "41",
+        .st == "آذربایجان غربی" ~ "44",
+        .st == "اردبیل" ~ "45",
+        .st == "اصفهان" ~ "31",
+        .st == "البرز" ~ "26",
+        .st == "ایلام" ~ "84",
+        .st == "بوشهر" ~ "77",
+        .st == "تهران" ~ "21",
+        .st == "چهارمحال و بختیاری" ~ "38",
+        .st == "چهارمحال وبختیاری" ~ "38",
+        .st == "خراسان جنوبی" ~ "56",
+        .st == "خراسان رضوی" ~ "51",
+        .st == "خراسان شمالی" ~ "58",
+        .st == "خوزستان" ~ "61",
+        .st == "زنجان" ~ "24",
+        .st == "سمنان" ~ "23",
+        .st == "سیستان بلوچستان" ~ "54",
+        .st == "سیستان وبلوچستان" ~ "54",
+        .st == "سیستان و بلوچستان" ~ "54",
+        .st == "فارس" ~ "71",
+        .st == "قزوین" ~ "28",
+        .st == "قم" ~ "25",
+        .st == "گلستان" ~ "17",
+        .st == "گیلان" ~ "13",
+        .st == "لرستان" ~ "66",
+        .st == "مازندران" ~ "11",
+        .st == "مرکزی" ~ "86",
+        .st == "هرمزگان" ~ "76",
+        .st == "همدان" ~ "81",
+        .st == "کردستان" ~ "87",
+        .st == "کرمان" ~ "34",
+        .st == "کرمانشاه" ~ "83",
+        .st == "کهگیلویه و بویراحمد" ~ "74",
+        .st == "کهگیلویه وبویراحمد" ~ "74",
+        .st == "کهگلویه و بویراحمد" ~ "74",
+        .st == "یزد" ~ "35",
+        TRUE ~ NA_character_
+      )
+    ) %>%
+    select(-.st)
+
+  keep <- setdiff(names(out), names(data))
+  drop <- setdiff(keep, add)
+  if (length(drop) > 0) {
+    out <- select(out, -all_of(drop))
+  }
+
+  out
 }
