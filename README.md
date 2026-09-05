@@ -1,6 +1,6 @@
 # pwrench
 
-**Utilities for Persian/Farsi data in R** — themes, number conversion, and helpers for working with Iranian data.
+**Utilities for Persian/Farsi data in R** — themes, number conversion, date conversion, and helpers for working with Iranian data.
 
 ---
 
@@ -10,6 +10,8 @@ pwrench is a personal R package that provides:
 
 - **Persian-friendly ggplot2 themes** (Sahel font, RTL alignment, configurable sizes)
 - **Number conversion** (Persian ↔ English digits)
+- **Date conversion** (Gregorian ↔ Jalali calendar)
+- **Event scraping** (Iranian events from time.ir + UN international days)
 - **Helpers** for Iranian data (e.g. province names, churn rates)
 
 It is primarily for personal use but may be useful for others working with Persian text and data. Use with caution; feedback and issues are welcome.
@@ -27,7 +29,11 @@ devtools::install_github("bahmanajdari/pwrench")
 library(pwrench)
 ```
 
-Requires **ggplot2** for the theme functions.
+### Dependencies
+
+- **ggplot2** - for theme functions
+- **rvest** - for web scraping (event functions)
+- **httr2** - for HTTP requests (event functions)
 
 ---
 
@@ -40,6 +46,10 @@ Requires **ggplot2** for the theme functions.
 | `rasmio_theme()` | Alternative Persian theme (Rasmio standards) |
 | `to_en_numbers()` | Convert Persian/Arabic numerals to English (0–9) |
 | `to_fa_numbers()` | Convert English numerals to Persian |
+| `gregorian_to_jalali()` | Convert Gregorian date to Jalali date |
+| `jalali_to_gregorian()` | Convert Jalali date to Gregorian date |
+| `get_jalali_events()` | Get events for a Jalali date (from time.ir + UN) |
+| `get_un_observances()` | Get all UN international days/weeks for a Jalali year |
 | `mutate_state_en()` | Add English province names from a column of Persian استان names |
 | `calculate_churn_rate()` | Churn and retention rates by product and year |
 | `psave_plot()` | Save a ggplot with consistent size and DPI |
@@ -84,6 +94,42 @@ persian_number <- "۱۲۳"
 to_en_numbers(persian_number)  # "123"
 
 to_fa_numbers(123)             # Persian digits
+```
+
+### Date conversion
+
+Convert between Gregorian and Jalali calendars:
+
+```r
+# Gregorian to Jalali
+gregorian_to_jalali("2026-09-02")  # "1405-06-11"
+
+# Jalali to Gregorian
+jalali_to_gregorian("1405-06-11")  # "2026-09-02"
+```
+
+### Event scraping
+
+Get events for a specific Jalali date from time.ir and UN international days:
+
+```r
+# Get all events for a date
+get_jalali_events("1405-06-11")
+
+# Get only time.ir events (skip UN)
+get_jalali_events("1405-06-11", include_un = FALSE)
+
+# Get all UN international days for a year
+get_un_observances(1405)
+```
+
+Example output:
+
+```
+                             event_name  source  event_date has_detail
+1                      جشن میانه زمستان time.ir [ ۱۵ بهمن ]      FALSE
+2                     World Braille Day      UN     15 بهمن      FALSE
+3 International Day of Human Fraternity      UN     15 بهمن      FALSE
 ```
 
 ### calculate_churn_rate()
